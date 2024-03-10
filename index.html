@@ -1,0 +1,109 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do you love me?</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+	background-color: #4C4E52;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    text-align: center;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  #yes, #no {
+    font-size: 18px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    outline: none;
+  }
+
+  #yes {
+    background-color: #27AE60;
+    color: #fff;
+    margin-right: 20px;
+  }
+
+  #no {
+    background-color: #E74C3C;
+    color: #fff;
+  }
+
+  #no:hover {
+    transform: scale(1.05);
+  }
+
+  #no:active {
+    transform: scale(0.95);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Do you love me ??</h1>
+  <button id="yes" onclick="yes()">Yes</button>
+  <button id="no" onclick="no()">No</button>
+</div>
+
+<script>
+var minDisplacementX = 30;
+var minDisplacementY = 30;
+function yes() {
+  alert("I Knew That!");
+}
+function no() {
+  var button = document.getElementById('no');
+  var container = document.querySelector('.container');
+  var containerRect = container.getBoundingClientRect();
+  var buttonWidth = button.offsetWidth;
+  var buttonHeight = button.offsetHeight;
+  var yesButton = document.getElementById('yes');
+  var yesButtonRect = yesButton.getBoundingClientRect();
+
+  // Calculate maximum allowable positions
+  var maxX = containerRect.width - buttonWidth - minDisplacementX;
+  var maxY = containerRect.height - buttonHeight - minDisplacementY;
+  
+  // Calculate new position ensuring the button stays within container bounds
+  var newX = Math.max(minDisplacementX, Math.min(maxX, Math.random() * maxX));
+  var newY = Math.max(minDisplacementY, Math.min(maxY, Math.random() * maxY));
+
+  // Check if the button overlaps with the "Yes" button
+  if (newX + buttonWidth >= yesButtonRect.left && newX <= yesButtonRect.right &&
+      newY + buttonHeight >= yesButtonRect.top && newY <= yesButtonRect.bottom) {
+    // If overlap occurs, adjust the position to prevent overlap
+    newX = Math.min(newX, yesButtonRect.left - buttonWidth);
+    newY = Math.min(newY, yesButtonRect.top - buttonHeight);
+  }
+
+  // Apply the new position
+  button.style.transform = 'translate(' + newX + 'px, ' + newY + 'px)';
+}
+</script>
+
+</body>
+</html>
